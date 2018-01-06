@@ -5,10 +5,7 @@
 import mock
 import pytest
 
-from click.testing import CliRunner
-
 from ibancom import ibancom
-from ibancom import cli
 
 TEST_IBAN = 'DE27100777770209299700'
 TEST_IBAN_DATA = {
@@ -76,14 +73,3 @@ def test_invalid_iban(request_get):
     client = ibancom.IBANClient(
         api_key='FAKE_KEY', iban='DE2710077777020929970043')
     assert not client.is_valid()
-
-
-def test_command_line_interface():
-    """Test the CLI."""
-    runner = CliRunner()
-    result = runner.invoke(cli.main)
-    assert result.exit_code == 0
-    assert 'ibancom.cli.main' in result.output
-    help_result = runner.invoke(cli.main, ['--help'])
-    assert help_result.exit_code == 0
-    assert '--help  Show this message and exit.' in help_result.output
