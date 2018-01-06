@@ -2,7 +2,7 @@
 History
 =======
 
-0.3.0 (2018-01-06)
+0.5.0 (2018-01-06)
 ------------------
 
 * Remove tests for python 2.6 and add tests for python 3.6.
