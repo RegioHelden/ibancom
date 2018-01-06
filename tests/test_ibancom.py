@@ -3,7 +3,6 @@
 
 """Tests for `ibancom` package."""
 import mock
-import pytest
 
 from ibancom import ibancom
 
@@ -32,7 +31,8 @@ TEST_IBAN_DATA = {
         {"code": "005", "message": "IBAN structure is correct"},
         {"code": "003", "message": "IBAN Length is correct"}
     ],
-    "sepa_data": {"SCT": "YES", "SDD": "YES", "COR1": "YES", "B2B": "NO", "SCC": "YES"}
+    "sepa_data": {"SCT": "YES", "SDD": "YES", "COR1": "YES", "B2B": "NO",
+                  "SCC": "YES"}
 }
 
 
@@ -48,9 +48,10 @@ def mocked_requests_get(*args, **kwargs):
     data = TEST_IBAN_DATA.copy()
 
     if kwargs['params']['iban'] != TEST_IBAN:
-        data['validations'].append(
-            {"code": "201", "message": "Account Number check digit is incorrect"}
-        )
+        data['validations'].append({
+            "code": "201",
+            "message": "Account Number check digit is incorrect",
+        })
 
     return MockResponse(data, 200)
 

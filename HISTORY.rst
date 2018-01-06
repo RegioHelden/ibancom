@@ -2,6 +2,11 @@
 History
 =======
 
+0.5.3 (2018-01-06)
+------------------
+
+* Update contirbuting file and fix pep8 errors
+
 0.5.2 (2018-01-06)
 ------------------
 

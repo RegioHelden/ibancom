@@ -16,7 +16,8 @@ class IBANClient(object):
         self.data = self.fetch_data()
 
     def is_valid(self):
-        return not any([x for x in self.data['validations'] if not x['code'].startswith('00')])
+        return not any([x for x in self.data['validations']
+                        if not x['code'].startswith('00')])
 
     def fetch_data(self):
         params = {
@@ -25,7 +26,7 @@ class IBANClient(object):
             'iban': self.iban,
         }
         try:
-            response = requests.get(self.api_url,params=params)
+            response = requests.get(self.api_url, params=params)
         except (HTTPError, ConnectionError):
             raise IBANException('API connection failed.')
         content = response.json()
