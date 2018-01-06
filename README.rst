@@ -13,10 +13,6 @@ ibancom
         :target: https://ibancom.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/RegioHelden/ibancom/shield.svg
-     :target: https://pyup.io/repos/github/RegioHelden/ibancom/
-     :alt: Updates
-
 
 Python client for IBAN.com_ API
 
@@ -30,7 +26,8 @@ Python client for IBAN.com_ API
 Features
 --------
 
-* TODO
+* IBAN validation
+* IBAN bank data details
 
 Credits
 ---------

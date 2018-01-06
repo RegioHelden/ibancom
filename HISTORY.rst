@@ -2,6 +2,11 @@
 History
 =======
 
+0.5.2 (2018-01-06)
+------------------
+
+* Updating README and documentation usage
+
 0.5.1 (2018-01-06)
 ------------------
 
