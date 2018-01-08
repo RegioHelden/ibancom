@@ -1,36 +1,49 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from requests.exceptions import HTTPError, ConnectionError
+from requests.exceptions import ConnectionError, HTTPError
 
 
 class IBANException(Exception):
     pass
 
 
-class IBANClient(object):
-    def __init__(self, api_key, iban, api_url=None):
-        self.api_key = api_key
-        self.api_url = api_url or 'https://www.iban.com/clients/api/ibanv2.php'
-        self.iban = iban
-        self.data = self.fetch_data()
+class IBANValidationException(Exception):
+    pass
+
+
+class IBAN(object):
+    def __init__(self, validation_errors, **data):
+        self.validation_errors = validation_errors
+        self.__dict__.update(data)
 
     def is_valid(self):
-        return not any([x for x in self.data['validations']
-                        if not x['code'].startswith('00')])
+        return not self.validation_errors
 
-    def fetch_data(self):
+    def validate(self):
+        if self.validation_errors:
+            raise IBANValidationException(self.validation_errors)
+
+
+class IBANClient(object):
+    def __init__(self, api_key, api_url=None):
+        self.api_key = api_key
+        self.api_url = api_url or 'https://www.iban.com/clients/api/ibanv2.php'
+
+    def get(self, iban):
+        data = self._fetch_data(iban)
+        validation_errors = [x for x in data['validations']
+                             if not x['code'].startswith('00')]
+        return IBAN(validation_errors, **data['bank_data'])
+
+    def _fetch_data(self, iban):
         params = {
             'api_key': self.api_key,
             'format': 'json',
-            'iban': self.iban,
+            'iban': iban,
         }
         try:
             response = requests.get(self.api_url, params=params)
         except (HTTPError, ConnectionError):
             raise IBANException('API connection failed.')
-        content = response.json()
-        return content
-
-    def get_bic(self):
-        return self.data['bank_data']['bic']
+        return response.json()

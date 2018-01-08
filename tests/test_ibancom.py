@@ -2,11 +2,15 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `ibancom` package."""
-import mock
+from requests.exceptions import ConnectionError
 
+import copy
+import mock
+import pytest
 from ibancom import ibancom
 
 TEST_IBAN = 'DE27100777770209299700'
+INVALID_TEST_IBAN = 'DE2710077777020929970043'
 TEST_IBAN_DATA = {
     "bank_data": {
         "bic": "NORSDE51",
@@ -45,7 +49,7 @@ def mocked_requests_get(*args, **kwargs):
         def json(self):
             return self.json_data
 
-    data = TEST_IBAN_DATA.copy()
+    data = copy.deepcopy(TEST_IBAN_DATA)
 
     if kwargs['params']['iban'] != TEST_IBAN:
         data['validations'].append({
@@ -56,21 +60,54 @@ def mocked_requests_get(*args, **kwargs):
     return MockResponse(data, 200)
 
 
+def mocked_failing_requests_get(*args, **kwargs):
+    raise ConnectionError
+
+
 @mock.patch('requests.get', side_effect=mocked_requests_get)
 def test_get_bic(request_get):
-    client = ibancom.IBANClient(
-        api_key='FAKE_KEY', iban=TEST_IBAN)
-    assert client.get_bic() == 'NORSDE51'
+    client = ibancom.IBANClient(api_key='FAKE_KEY')
+    iban = client.get(iban=TEST_IBAN)
+    assert iban.bic == 'NORSDE51'
 
 
 @mock.patch('requests.get', side_effect=mocked_requests_get)
 def test_valid_iban(request_get):
-    client = ibancom.IBANClient(api_key='FAKE_KEY', iban=TEST_IBAN)
-    assert client.is_valid()
+    client = ibancom.IBANClient(api_key='FAKE_KEY')
+    iban = client.get(iban=TEST_IBAN)
+    assert iban.is_valid()
 
 
 @mock.patch('requests.get', side_effect=mocked_requests_get)
 def test_invalid_iban(request_get):
-    client = ibancom.IBANClient(
-        api_key='FAKE_KEY', iban='DE2710077777020929970043')
-    assert not client.is_valid()
+    client = ibancom.IBANClient(api_key='FAKE_KEY')
+    iban = client.get(iban=INVALID_TEST_IBAN)
+    assert not iban.is_valid()
+
+
+@mock.patch('requests.get', side_effect=mocked_failing_requests_get)
+def test_iban_exception(request_get):
+    client = ibancom.IBANClient(api_key='FAKE_KEY')
+    with pytest.raises(ibancom.IBANException):
+        client.get(iban=INVALID_TEST_IBAN)
+
+
+@mock.patch('requests.get', side_effect=mocked_requests_get)
+def test_validate_raise_exception(request_get):
+    client = ibancom.IBANClient(api_key='FAKE_KEY')
+    iban = client.get(iban=INVALID_TEST_IBAN)
+    with pytest.raises(ibancom.IBANValidationException):
+        iban.validate()
+
+
+@mock.patch('requests.get', side_effect=mocked_requests_get)
+def test_iban_attributes(request_get):
+    client = ibancom.IBANClient(api_key='FAKE_KEY')
+    iban = client.get(iban=TEST_IBAN)
+    assert iban.is_valid()
+    assert iban.bank == 'norisbank'
+    assert iban.city == 'Berlin'
+    assert iban.zip == "10625"
+    assert iban.email is None
+    assert iban.country == 'Germany'
+    assert iban.account == "0209299700"

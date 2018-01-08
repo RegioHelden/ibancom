@@ -2,10 +2,17 @@
 History
 =======
 
+0.5.4 (2018-01-08)
+------------------
+
+* Improve the way of usage of the library by returning an IBAN object
+* Add pytest-cov to run tests coverage with pytest
+
+
 0.5.3 (2018-01-06)
 ------------------
 
-* Update contirbuting file and fix pep8 errors
+* Update contributing file and fix pep8 errors
 
 0.5.2 (2018-01-06)
 ------------------
