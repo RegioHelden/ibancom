@@ -7,7 +7,7 @@ from requests.exceptions import ConnectionError
 import copy
 import mock
 import pytest
-from ibancom import ibancom
+import ibancom
 
 TEST_IBAN = 'DE27100777770209299700'
 INVALID_TEST_IBAN = 'DE2710077777020929970043'
