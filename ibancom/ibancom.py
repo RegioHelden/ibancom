@@ -13,9 +13,17 @@ class IBANValidationException(Exception):
 
 
 class IBAN(object):
-    def __init__(self, validation_errors, **data):
+    def __init__(self, validation_errors, sepa_data, **data):
         self.validation_errors = validation_errors
+        self.sepa_data = sepa_data
         self.__dict__.update(data)
+
+    def __getattr__(self, name):
+        sepa_supports = ('sct', 'sdd', 'cor1', 'b2b', 'scc')
+        if name.replace('supports_', '') in sepa_supports:
+            key = name.replace('supports_', '').upper()
+            return self.sepa_data[key].lower() == 'yes'
+        raise AttributeError(name)
 
     def is_valid(self):
         return not self.validation_errors
@@ -34,7 +42,7 @@ class IBANClient(object):
         data = self._fetch_data(iban)
         validation_errors = [x for x in data['validations']
                              if not x['code'].startswith('00')]
-        return IBAN(validation_errors, **data['bank_data'])
+        return IBAN(validation_errors, data['sepa_data'], **data['bank_data'])
 
     def _fetch_data(self, iban):
         params = {

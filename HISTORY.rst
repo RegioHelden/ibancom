@@ -2,6 +2,12 @@
 History
 =======
 
+0.5.6 (2018-01-08)
+------------------
+
+* Add checking againt SEPA supports for SCT, SDD, COR1, B2B and SCC
+
+
 0.5.5 (2018-01-08)
 ------------------
 

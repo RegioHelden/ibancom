@@ -111,3 +111,21 @@ def test_iban_attributes(request_get):
     assert iban.email is None
     assert iban.country == 'Germany'
     assert iban.account == "0209299700"
+
+
+@mock.patch('requests.get', side_effect=mocked_requests_get)
+def test_sepa_supports(request_get):
+    client = ibancom.IBANClient(api_key='FAKE_KEY')
+    iban = client.get(iban=TEST_IBAN)
+    assert iban.is_valid()
+    assert iban.supports_sct
+    assert iban.supports_sdd
+    assert iban.supports_cor1
+    assert not iban.supports_b2b
+    assert iban.supports_scc
+
+
+def test_iban_object_raises_attr_error():
+    iban = ibancom.IBAN(None, None)
+    with pytest.raises(AttributeError):
+        iban.some_magical_attributes
