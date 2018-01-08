@@ -27,7 +27,7 @@ test_requirements = [
 
 setup(
     name='ibancom',
-    version='0.5.3',
+    version='0.5.4',
     description="Python client for IBAN.com service",
     long_description=readme + '\n\n' + history,
     author="RegioHelden GmbH",

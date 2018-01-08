@@ -4,4 +4,4 @@
 
 __author__ = """RegioHelden GmbH"""
 __email__ = 'mounir.messelmeni@regiohelden.de'
-__version__ = '0.5.3'
+__version__ = '0.5.4'
