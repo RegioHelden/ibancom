@@ -18,7 +18,7 @@ deploy:
       QndtbC9qYU5YVlJvcE45a3NYcEVJZzZYVlB6SHI5VlVnSDNSQksyMW5ZQXJ2VCsrRlB4TTVXNzZY
       WnVWUTFoK3g0N1prNUZuazNlanZSN05rOXhSanFSbjBzbytaSUo1eHNsVTE1V05NZWpVRkxlZ0k9
   true:
-    python: 2.7
+    python: 3.7
     repo: RegioHelden/ibancom
     tags: true
 install: pip install -U tox-travis
@@ -27,8 +27,5 @@ language: python
 python:
 - 3.7
 - 3.6
-- 3.5
-- 3.4
-- 3.3
 - 2.7
 script: tox
