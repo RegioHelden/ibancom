@@ -12,7 +12,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'requests>=2.5.0',
+    'requests>=2.21.0',
 ]
 
 setup_requirements = [

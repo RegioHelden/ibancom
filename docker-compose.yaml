@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  python:
+    build: .
+    user: app
+    volumes:
+      - .:/app
+    environment:
+      HISTFILE: /app/.bash_history
+    restart: unless-stopped
+    command: bash -c "flake8 ibancom tests && python setup.py test && tox"
