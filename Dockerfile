@@ -13,6 +13,7 @@ RUN apt-get -y update && apt-get -y install \
       libpq-dev  \
       libssl-dev \
       gettext \
+      git \
     && \
     apt-get clean && \
     mkdir /app && \
