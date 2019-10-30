@@ -2,9 +2,22 @@
 # -*- coding: utf-8 -*-
 
 """The setup script."""
+import os
+import re
 
 from setuptools import setup, find_packages
-from ibancom import __version__, __author__, __email__
+
+
+def get_version(*file_paths):
+    """Retrieves the version from django_scrubber/__init__.py"""
+    filename = os.path.join(os.path.dirname(__file__), *file_paths)
+    version_file = open(filename).read()
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError('Unable to find version string.')
+
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -28,11 +41,11 @@ test_requirements = [
 
 setup(
     name='ibancom',
-    version=__version__,
-    description="Python client for IBAN.com service",
+    version=get_version('ibancom', '__init__.py'),
+    description='Python client for IBAN.com service',
     long_description=readme + '\n\n' + history,
-    author=__author__,
-    author_email=__email__,
+    author='RegioHelden GmbH',
+    author_email='entwicklung@regiohelden.de',
     url='https://github.com/RegioHelden/ibancom',
     packages=find_packages(include=['ibancom']),
     entry_points={
@@ -42,7 +55,7 @@ setup(
     },
     include_package_data=True,
     install_requires=requirements,
-    license="MIT license",
+    license='MIT license',
     zip_safe=False,
     keywords='ibancom',
     classifiers=[
