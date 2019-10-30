@@ -3,7 +3,7 @@ from .ibancom import IBAN, IBANClient, IBANException, IBANValidationException
 
 __author__ = """RegioHelden GmbH"""
 __email__ = 'mounir.messelmeni@regiohelden.de'
-__version__ = '0.5.6'
+__version__ = '0.6.0'
 
 
 __all__ = [
