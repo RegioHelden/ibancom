@@ -44,9 +44,13 @@ Check for upgradeable packages by running ```docker-compose run --rm python pip-
 Making a new release
 --------------------
 
-[bumpversion](https://github.com/peritus/bumpversion) is used to manage releases.
+bumpversion_ is used to manage releases.
 
-Add your changes to the [HISTORY](./HISTORY.rst) and run `docker-compose run --rm python bumpversion <major|minor|patch>`, then push (including tags)
+.. _bumpversion: https://www.iban.com
+
+Add your changes to the HISTORY_ and run ```docker-compose run --rm python bumpversion <major|minor|patch>```, then push (including tags)
+
+.. _HISTORY: ./HISTORY.rst
 
 Credits
 ---------
