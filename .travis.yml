@@ -25,7 +25,7 @@ install: pip install -U tox-travis
 dist: xenial
 language: python
 python:
+- 3.8
 - 3.7
 - 3.6
-- 2.7
 script: tox
