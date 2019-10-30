@@ -2,6 +2,14 @@
 History
 =======
 
+0.6.0 (2019-10-30)
+------------------
+
+* Upgrade packages
+* Remove Python 2.x support
+* Add tests for Python 3.8
+
+
 0.5.6 (2018-01-08)
 ------------------
 

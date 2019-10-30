@@ -4,6 +4,7 @@
 """The setup script."""
 
 from setuptools import setup, find_packages
+from ibancom import __version__, __author__, __email__
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -27,11 +28,11 @@ test_requirements = [
 
 setup(
     name='ibancom',
-    version='0.5.6',
+    version=__version__,
     description="Python client for IBAN.com service",
     long_description=readme + '\n\n' + history,
-    author="RegioHelden GmbH",
-    author_email='mounir.messelmeni@regiohelden.de',
+    author=__author__,
+    author_email=__email__,
     url='https://github.com/RegioHelden/ibancom',
     packages=find_packages(include=['ibancom']),
     entry_points={
