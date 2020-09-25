@@ -6,6 +6,7 @@ History
 ------------------
 
 * Replace IBAN URL
+* Use Black for formatting
 
 0.6.0 (2019-10-30)
 ------------------
