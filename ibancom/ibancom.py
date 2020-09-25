@@ -36,7 +36,7 @@ class IBAN(object):
 class IBANClient(object):
     def __init__(self, api_key, api_url=None):
         self.api_key = api_key
-        self.api_url = api_url or 'https://www.iban.com/clients/api/ibanv2.php'
+        self.api_url = api_url or 'https://api.iban.com/clients/api/ibanv2.php'
 
     def get(self, iban):
         data = self._fetch_data(iban)
