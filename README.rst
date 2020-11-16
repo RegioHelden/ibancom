@@ -6,8 +6,7 @@ ibancom
 .. image:: https://img.shields.io/pypi/v/ibancom.svg
         :target: https://pypi.python.org/pypi/ibancom
 
-.. image:: https://img.shields.io/travis/RegioHelden/ibancom.svg
-        :target: https://travis-ci.org/RegioHelden/ibancom
+.. image:: https://github.com/RegioHelden/ibancom/workflows/Github%20build/badge.svg
 
 .. image:: https://readthedocs.org/projects/ibancom/badge/?version=latest
         :target: https://ibancom.readthedocs.io/en/latest/?badge=latest
