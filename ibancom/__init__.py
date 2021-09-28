@@ -1,4 +1,10 @@
-from .ibancom import IBAN, IBANClient, IBANException, IBANValidationException
+from .ibancom import (
+    IBAN,
+    IBANClient,
+    IBANException,
+    IBANValidationException,
+    IBANApiException,
+)
 
 __version__ = "0.6.2"
 
