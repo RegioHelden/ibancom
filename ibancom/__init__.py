@@ -14,4 +14,5 @@ __all__ = [
     "IBAN",
     "IBANValidationException",
     "IBANException",
+    "IBANApiException",
 ]
