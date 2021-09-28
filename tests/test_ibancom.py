@@ -155,4 +155,4 @@ def test_subscription_errpr(request_get):
     client = ibancom.IBANClient(api_key="FAKE_KEY")
     with pytest.raises(ibancom.IBANApiException) as exc_info:
         client.get(iban=TEST_IBAN)
-    assert exc_info.value.message == "Subscription expired"
+    assert str(exc_info.value) == "Subscription expired"
