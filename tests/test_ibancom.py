@@ -65,6 +65,24 @@ def mocked_failing_requests_get(*args, **kwargs):
     raise ConnectionError
 
 
+def mocked_requests_subscription_error(*args, **kwargs):
+    class MockResponse:
+        def __init__(self, json_data, status_code):
+            self.json_data = json_data
+            self.status_code = status_code
+
+        def json(self):
+            return self.json_data
+
+    data = copy.deepcopy(TEST_IBAN_DATA)
+    del data["validations"]
+    data["errors"] = [
+        {"code": 302, "message": "Subscription expired"}
+    ]
+
+    return MockResponse(data, 200)
+
+
 @mock.patch("requests.get", side_effect=mocked_requests_get)
 def test_get_bic(request_get):
     client = ibancom.IBANClient(api_key="FAKE_KEY")
@@ -130,3 +148,11 @@ def test_iban_object_raises_attr_error():
     iban = ibancom.IBAN(None, None)
     with pytest.raises(AttributeError):
         iban.some_magical_attributes
+
+
+@mock.patch("requests.get", side_effect=mocked_requests_subscription_error)
+def test_subscription_errpr(request_get):
+    client = ibancom.IBANClient(api_key="FAKE_KEY")
+    with pytest.raises(ibancom.IBANApiException) as exc_info:
+        client.get(iban=TEST_IBAN)
+    assert str(exc_info.value) == "Subscription expired"

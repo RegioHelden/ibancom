@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import requests
 from requests.exceptions import ConnectionError, HTTPError
 
@@ -9,6 +7,10 @@ class IBANException(Exception):
 
 
 class IBANValidationException(Exception):
+    pass
+
+
+class IBANApiException(Exception):
     pass
 
 
@@ -40,6 +42,8 @@ class IBANClient(object):
 
     def get(self, iban):
         data = self._fetch_data(iban)
+        if "errors" in data and "validations" not in data:
+            raise IBANApiException(data["errors"][0]["message"])
         validation_errors = [
             x for x in data["validations"] if not x["code"].startswith("00")
         ]
