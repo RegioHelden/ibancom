@@ -1,3 +1,13 @@
+
+Unmaintained
+------------
+
+.. image:: https://img.shields.io/badge/project-unmaintained-red.svg
+
+The library has been abandoned as we've migrated to the Bankdatencheck by Portunity https://www.bankdatencheck.de/
+
+------------
+
 =======
 ibancom
 =======
